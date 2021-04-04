@@ -1,5 +1,6 @@
 #include <iostream>		// For Input/Output
 #include <ctime> 		// For time()
+#include <conio.h> 		// For _kbhit and _getch()
 using namespace std;
 
 // All the variables we need for the game
@@ -20,7 +21,7 @@ void StartUP()
 	// At beginning, game status is false.
 	gameOver = false;
 	// The snake is not moving
-	dir = STOP 
+	dir = STOP;
 	// snake starting position will be in the middle
 	x = width / 2;
 	y = height / 2;
@@ -42,7 +43,7 @@ void Draw()
 	cout << endl;
 	
 	// Side Borders
-	for(int i = 0 ; i < height ; i++)
+	for(int i = 0 ; i < height ; i++){
 		for(int j = 0 ; j < width ; j++){
 			// if the j is 0 or to the width, print the border
 			if(j == 0 && j == width-1)
