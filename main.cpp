@@ -1,7 +1,7 @@
-
 #include <iostream>		// For Input/Output
 #include <ctime> 		// For time()
 #include <conio.h> 		// For _kbhit and _getch()
+#include <Windows.h>
 using namespace std;
 
 // All the variables we need for the game
@@ -15,6 +15,9 @@ int x, y, fruitX, fruitY, score;
 // enum for direction
 enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
+// For tail of the snake, we need two arrays of position for all the tails
+int tailX[100] ,tailY[100];
+int nTail;	// Size of the snake
 
 // Starting function 
 void StartUP()
@@ -49,8 +52,28 @@ void Draw()
 			// if the j is 0 or to the width, print the border
 			if (j == 0 || j == width - 1)
 				cout << "#";
+			// printing the Snake
+			if(i == y && j == x)
+				cout << "O";
+			// printing the Fruit
+			else if(i == fruitY && j == fruitX)
+				cout << "F";
 			// else print space
-			cout << " ";
+			else{
+				// for checking if we should print the tail or the space
+				bool print = false;
+				for(int k = 0 ; k < nTail ; k++)
+				{
+					if(tailX[k] == j && tailY[k] == i)
+					{
+						// printing the tail of the snake
+						cout << "o" ;
+						print=true;
+					}
+				}
+				if(!print)
+					cout << " ";
+			}
 		}
 		cout << endl;
 	}
@@ -102,6 +125,22 @@ void Input()
 // Function for logic of the game
 void Logic()
 {
+	// For the direction of the tail, we need to use the previous element's direction of the tail
+	int prevX = tailX[0];
+	int prevY = tailY[0];
+	int prev2X, prev2Y;
+	tailX[0] = x;
+	tailY[0] = y;
+	// we need to store the prev elements direction to the current direction for all the tails, starting from 1 to the size of the snake
+	for (int i = 1; i < nTail; i++)
+	{
+		prev2X = tailX[i];
+		prev2Y = tailY[i];
+		tailX[i] = prevX;
+		tailY[i] = prevY;
+		prevX = prev2X;
+		prevY = prev2Y;
+	}
 	// According to the direction, updating the position of the snake's x and y coordinates
 	switch (dir)
 	{
@@ -122,16 +161,27 @@ void Logic()
 	}
 
 	// if user hits the border, game is over
-	if (x >= width || x < 0 || y >= height || y < 0)
-		gameOver = true;
+	/*if (x >= width || x < 0 || y >= height || y < 0)
+		gameOver = true;*/
+	// Just an update, user can now go through walls and to the other side. 
+	if (x >= width) x = 0; else if (x < 0) x = width - 1;
+	if (y >= height) y = 0; else if (y < 0) y = height - 1;
+	
+	// cheching if the user hits it's own tail, then game is over
+	for (int i = 0; i < nTail; i++)
+	{
+		if (tailX[i] == x && tailY[i] == y)
+			gameOver = true;
+	}
 
-	// if user eats the fruit, update score, change the fruit's location
+	// if user eats the fruit, update score, change the fruit's location and add tail to the snake
 	if (x == fruitX && y == fruitY)
 	{
 		score += 10;
 		srand(time(0));
 		fruitX = rand() % width;
 		fruitY = rand() % height;
+		nTail++;
 	}
 }
 
