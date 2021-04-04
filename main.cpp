@@ -35,7 +35,32 @@ void StartUP()
 // Function to draw Borders, Snack and Fruit
 void Draw()
 {
+	system("cls");
+	// Top Border
+	for(int i = 0 ; i < width ; i++)
+		cout << "#";
+	cout << endl;
 	
+	// Side Borders
+	for(int i = 0 ; i < height ; i++)
+		for(int j = 0 ; j < width ; j++){
+			// if the j is 0 or to the width, print the border
+			if(j == 0 && j == width-1)
+				cout << "#";
+			// else print space
+			cout << " ";
+		}
+		cout << endl;
+	}
+			
+	
+	// Bottom Border
+	for(int i = 0 ; i < width ; i++)
+		cout << "#";
+	cout << endl;
+
+	// Printing Score at the bottom of the box
+	cout << "Score : " << score << endl;
 }
 
 // Function to get Input from user
