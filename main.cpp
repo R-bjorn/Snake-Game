@@ -62,7 +62,7 @@ void Draw()
 	cout << endl;
 
 	// Printing Score at the bottom of the box
-	cout << "Score : " << score << endl;
+	cout << "Score:" << score << endl;
 }
 
 // Function to get Input from user
