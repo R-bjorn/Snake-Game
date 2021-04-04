@@ -100,7 +100,37 @@ void Input()
 // Function for logic of the game
 void Logic()
 {
+	// According to the direction, updating the position of the snake's x and y coordinates
+	switch(dir)
+	{
+		case LEFT:
+			x--;
+			break;
+		case RIGHT:
+			x++;
+			break;
+		case UP:
+			y--;
+			break;
+		case DOWN:
+			y++;
+			break;
+		default:
+			break;		
+	}
 	
+	// if user hits the border, game is over
+	if (x >= width || x < 0 || y >= height || y < 0)
+		gameOver = true;
+	
+	// if user eats the fruit, update score, change the fruit's location
+	if (x == FruitX && y == FruitY)
+	{
+		score += 10;
+		srand(time(0));
+		FruitX = rand() % width;
+		FruitY = rand() % height;
+	}
 }
 
 int main()
