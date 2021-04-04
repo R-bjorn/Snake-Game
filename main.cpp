@@ -66,7 +66,35 @@ void Draw()
 // Function to get Input from user
 void Input()
 {
-	
+	// cheching to see if the keyborder is hit
+	if(_kbhit)
+	{
+		// getting the input from the user
+		switch(_getch())
+		{
+			// Using keyboards w,a,s,d keys to move the snake up, left,down and right accordingly
+			case 'a':
+				dir = LEFT;
+				break;
+				
+			case 'd':
+				dir = RIGHT;
+				break;
+				
+			case 'w':
+				dir = UP;
+				break;
+				
+			case 's':
+				dir = DOWN;
+				break;
+				
+			// If user wants to quit the game
+			case 'x':
+				gameOver = true;
+				break;
+		}
+	}
 }
 
 // Function for logic of the game
