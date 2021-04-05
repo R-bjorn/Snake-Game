@@ -91,10 +91,13 @@ void Draw()
 // Function to get Input from user
 void Input()
 {
-	// cheching to see if the keyborder is hit
-	if (_kbhit)
-	{
-		// getting the input from the user
+	// to check if the user enters the direction or not
+	bool hit = false;
+	if (_kbhit()) {
+		hit = true;
+	}
+	// if the user doesn't input the direction, snake keeps going to the direction given previously. 
+	if (hit) {
 		switch (_getch())
 		{
 			// Using keyboards w,a,s,d keys to move the snake up, left,down and right accordingly
@@ -120,6 +123,12 @@ void Input()
 			break;
 		}
 	}
+	// cheching to see if the keyborder is hit
+	/*if (_kbhit)
+	{
+		// getting the input from the user
+		
+	}*/
 }
 
 // Function for logic of the game
@@ -199,6 +208,8 @@ int main()
 		Input();
 		// Use logic for the game
 		Logic();
+		// Sleep for some time
+		Sleep(10);
 	}
 
 	// After the game is over, clear the screen and print out "Game Over!"
